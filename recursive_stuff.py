@@ -129,4 +129,28 @@ def multiply(a, x):
         return a 
     return a + multiply(a, x - 1)
 
+def only_odd_digits(n):
+    if n // 10 == 0 and (n % 10) % 2 == 1:
+        return True 
+    if n % 2 == 0:
+        return False 
+    elif n % 2 == 1:
+        return only_odd_digits(n // 10)
+    
+def colour_trio(colours):
+    colour_archive = {'rr': 'r', 'bb': 'b', 'yy': 'y',
+                      'ry': 'b', 'rb': 'y',
+                      'br': 'y', 'by': 'r',
+                      'yr': 'b', 'yb': 'r'}
+    
+    colour_list = list(colours)
+    
+    if len(colour_list) == 1:
+        return colour_list[0]
+    
+    for i in range(len(colour_list) - 1):
+        colour_list[i] = colour_archive[colour_list[i] + colour_list[i + 1]]
+    
+    colour_list.pop()
 
+    return colour_trio(colour_list)
