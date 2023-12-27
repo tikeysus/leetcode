@@ -1,0 +1,57 @@
+def fact(num):
+    if num < 0:
+        return None 
+    elif num == 0 or num == 1:
+        return 1
+    return num * fact(num - 1)
+
+def harmonic_sum(n):
+    if n <= 0:
+        return None 
+    elif n == 1:
+        return 1  
+    return 1/n + harmonic_sum(n - 1)
+
+def power(a, b):
+    if b == 0:
+        return 1
+    if b == 1:
+        return a 
+    return a * power(a, b - 1)
+
+def countdown(n):
+    if n == 0:
+        return '0'
+    return f'{n}' + countdown(n - 1)
+
+def summation(n):
+    if n == 0:
+        return 0 
+    if n == 1:
+        return 1
+    return n + summation(n - 1)
+
+def log(n):
+    if n <= 0:
+        return None
+    if n == 1:
+        return 0 
+    elif n == 10:
+        return 1 
+    return 1 + log(n // 10)
+
+def multiply(a, x):
+    if x == 0:
+        return 0 
+    elif x == 1:
+        return a 
+    return a + multiply(a, x - 1)
+
+def only_odd_digits(n):
+    if n // 10 == 0 and (n % 10) % 2 == 1:
+        return True 
+    if n % 2 == 0:
+        return False 
+    elif n % 2 == 1:
+        return only_odd_digits(n // 10)
+
