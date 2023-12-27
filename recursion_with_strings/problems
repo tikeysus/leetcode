@@ -1,1 +1,39 @@
+def is_palindrome(word):
+    if len(word) == 0 or len(word) == 1:
+        return True 
+    if word[0] == word[-1]:
+        return is_palindrome(word[1:-1])
+    return False
+
+def string_reverse(word):
+    if len(word) == 0:
+        return ''
+    elif len(word) == 1:
+        return word 
+    elif len(word) == 2:
+        return word[1] + word[0]
+    return string_reverse(word[1:]) + word[0]
+
+def string_length(word):
+    if word == '':
+        return 0 
+    return 1 + string_length(word[1:])
+
+def colour_trio(colours):
+    colour_archive = {'rr': 'r', 'bb': 'b', 'yy': 'y',
+                      'ry': 'b', 'rb': 'y',
+                      'br': 'y', 'by': 'r',
+                      'yr': 'b', 'yb': 'r'}
+    
+    colour_list = list(colours)
+    
+    if len(colour_list) == 1:
+        return colour_list[0]
+    
+    for i in range(len(colour_list) - 1):
+        colour_list[i] = colour_archive[colour_list[i] + colour_list[i + 1]]
+    
+    colour_list.pop()
+
+    return colour_trio(colour_list)
 
