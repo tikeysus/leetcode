@@ -1,0 +1,57 @@
+def list_count(items): 
+    if len(items) == 0:
+        return 0 
+    if len(items) == 1:
+        return items[0]
+    return items[0] + list_count(items[1:])
+def summer(num):
+    if len(num) == 0:
+        return 0 
+    if len(num) == 1:
+        return num[0]
+    return int(num[0]) + int(summer(num[1:]))
+
+def count(items, target):
+    if len(items) == 0:
+        return 0 
+    if len(items) == 1 and target in items:
+        return 1
+    elif len(items) == 1 and target not in items:
+        return 0
+    if items[0] == target: return 1 + count(items[1:], target)
+    else: return count(items[1:], target)
+
+def integer_sum(items):
+    if len(items) == 0:
+        return 0 
+    if len(items) == 1 and type(items[0]) == int:
+        return items[0] + integer_sum(items[1:])
+    elif len(items) == 1 and type(items[0]) != int or (items[0] is True):
+        return integer_sum(items[1:])
+    elif len(items) > 1 and type(items[0]) == int:
+        return items[0] + integer_sum(items[1:])
+    elif len(items) > 1 and type(items[0]) != int:
+        return integer_sum(items[1:])
+
+def nested_list(array):
+    if not array:
+        return [] 
+    if type(array[0]) == list:
+        return nested_list[0] + nested_list(array[1:])
+    return array[0] + nested_list(array[1:])
+
+def odd_sum(nums):
+    if not nums:
+        return 0 
+    if nums[0] % 2 == 0:
+        return odd_sum(nums[1:])
+    else:
+        return nums[0] + odd_sum(nums[1:])
+
+def sum_odd_sub_even(nums):
+    if not nums:
+        return 0 
+    if nums[0] % 2 == 1:
+        return nums[0] + sum_odd_sub_even(nums[1:])
+    if nums[0] % 2 == 0:
+        return -nums[0] + sum_odd_sub_even(nums[1:])
