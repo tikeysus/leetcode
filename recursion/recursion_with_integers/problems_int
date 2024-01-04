@@ -55,3 +55,18 @@ def only_odd_digits(n):
     elif n % 2 == 1:
         return only_odd_digits(n // 10)
 
+def fib(n):
+    if n <= 1:
+        return n
+    return fib(n - 1) + fib(n - 2)
+
+def power(x, n):
+    if n == 0:
+        return 1
+    elif n == 1:
+        return x
+    elif n > 1:
+        return x * power(x, n - 1)
+    return 1/x * power(x, n + 1)
+
+print(power(0.00001, 2147483647))
