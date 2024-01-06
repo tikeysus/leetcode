@@ -68,5 +68,3 @@ def power(x, n):
     elif n > 1:
         return x * power(x, n - 1)
     return 1/x * power(x, n + 1)
-
-print(power(0.00001, 2147483647))
