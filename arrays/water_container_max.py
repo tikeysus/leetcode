@@ -16,4 +16,24 @@ def max_area(height):
                 max = (j + 1 - (i + 1)) * (min(height[i], height[j]))
     return max
 
+#times out for large inputs, have to revisit this one. 
+
+def max_area(height):
+    max = 0
+    empty = dict()
+    sorted_height = sorted(height)
+    for i in range (len(sorted_height)):
+        empty[sorted_height[i]] = height.index(sorted_height[i])
+    return empty 
+
+def max_area(height):
+    max = 0
+    empty = tuple(()) 
+    sorted_height = sorted(height)
+    for i in range(len(sorted_height)):
+        empty += ((sorted_height[i], height.index(sorted_height[i])),)
+        #height.index(sorted_height[i])
+    return empty 
+
+
 print(max_area([1,8,6,2,5,4,8,3,7]))
