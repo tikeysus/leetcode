@@ -23,17 +23,9 @@ def max_area(height):
     empty = dict()
     sorted_height = sorted(height)
     for i in range (len(sorted_height)):
+        if sorted_height[i] in empty:
+            pass 
         empty[sorted_height[i]] = height.index(sorted_height[i])
     return empty 
-
-def max_area(height):
-    max = 0
-    empty = tuple(()) 
-    sorted_height = sorted(height)
-    for i in range(len(sorted_height)):
-        empty += ((sorted_height[i], height.index(sorted_height[i])),)
-        #height.index(sorted_height[i])
-    return empty 
-
 
 print(max_area([1,8,6,2,5,4,8,3,7]))
