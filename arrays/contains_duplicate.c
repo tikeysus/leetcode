@@ -4,30 +4,23 @@
 int duplicate(int *nums, int numsSize); 
 
 int main(){
+	int nums[] = {1,2,8,6,1};
+	int* nums_ptr = nums; 
+	int len = 5; 
+
+	int answer = duplicate(nums_ptr, len); 
+	printf("%d\n", answer); 
+
 	return 0; 
 }
 
 int duplicate(int* nums, int numsSize){
-	int occurences[19] = {0}; //can be made to be 256 if ASCII characters are to be considered
-
-	for (int i = 0; i < numsSize; i++){
-		if (nums[i] >= 0){
-			int current = nums[i] + 10; 
-			occurences[current] += 1; 
-		}
-
-		else{
-			int current = nums[i] + 10; 
-			occurences[current] += 1; 
+	for (int i = 0; i < numsSize - 1; i++){
+		for (int j = i + 1; j < numsSize; j++){
+			if (nums[i] == nums[j]){
+				return 1; 
+			}
 		}
 	}
-
-	for (int i = 0; i < 19; i++){
-		if (occurences[i] >= 2){
-			return 1; 
-		}
-	}
-
 	return 0; 
-
 }
