@@ -4,3 +4,10 @@
        ((>= left right))
     (rotatef (aref arr left) (aref arr right)))
   arr)
+
+(defun array-reverse (arr)
+  (let* ((len (length arr))
+         (newarr (make-array len)))
+    (dotimes (i len)
+      (setf (aref newarr i) (aref arr (- len i 1))))
+    newarr))
