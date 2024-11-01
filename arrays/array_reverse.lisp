@@ -1,0 +1,6 @@
+(defun array-reverse (arr)
+  (do* ((right 0 (1+ right))
+        (left (1- (length arr)) (1- left)))
+       ((>= left right))
+    (rotatef (aref arr left) (aref arr right)))
+  arr)
