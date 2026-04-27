@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+file="$1"
+
+if [ -z "$file" ]; then
+  echo "Usage: ./scripts/new path/to/file.rs"
+  exit 1
+fi
+
+ext="${file##*.}"
+name="$(basename "$file" ".$ext" | tr '_' ' ')"
+
+mkdir -p "$(dirname "$file")"
+
+if [ -e "$file" ]; then
+  echo "File already exists: $file"
+  exit 1
+fi
+
+case "$ext" in
+  rs|c|py)
+    cat > "$file" <<EOT
+/*
+Problem: $name
+Link:
+Difficulty:
+Topic(s):
+Pattern:
+
+Description:
+
+Constraints:
+
+Initial idea:
+
+Final approach:
+
+Complexity:
+Time:
+Space:
+
+Mistakes / difficulties:
+
+Key lesson:
+
+Review:
+- Solved on:
+- Revisit:
+*/
+
+EOT
+    ;;
+  md|sh)
+    touch "$file"
+    ;;
+  *)
+    touch "$file"
+    ;;
+esac
+
+echo "Created $file"
