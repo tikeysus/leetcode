@@ -3,7 +3,7 @@ Problem: Product of Array Except Self
 Link:
 Difficulty: Medium 
 Topic(s):
-Pattern:
+Pattern: Except Self
 
 Description:
 Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].
@@ -20,52 +20,62 @@ Initial idea was to calculate the cumulative product at the start and then fake 
 if there is a zero in the array that needs special consideration. 
 
 Final approach:
+Got a little hint from GPT. These problems that follow the pattern "except self" require separate consideration of suffixes and prefixes. Noted for next time. 
 
 Complexity:
 Time:
 Space:
 
 Mistakes / difficulties:
+I did not consider negative numbers
 
 Key lesson:
 
 Review:
-- Solved on:
+- Solved on: April 28th. 
 - Revisit:
 */
 
 #include <stdio.h>
 #include <stdlib.h>
 
-
-int arr_product(int* nums, int numsSize){
-    int product = 1; 
-    for (int i = 0; i < numsSize; i++){
-        product *= nums[i]; 
-    }
-    return product; 
+int* prefix_arr(int* nums, int numsSize, int* returnSize){
+	int* prefix_arr = malloc(numsSize * sizeof(int)); 
+	int product = nums[0]; 
+	prefix_arr[0] = 1; 
+	for (int i = 1; i < numsSize; i++){
+		prefix_arr[i] = product;
+		product *= nums[i];
+	}
+	
+	*returnSize = numsSize; 
+	return prefix_arr; 
 }
 
-int quotient(int product, int num){
-    int count = 0; 
-    while (product > 0){
-        product -= num; 
-        count++; 
-    }
-    return count; 
+int* suffix_arr(int* nums, int numsSize, int* returnSize){
+	int* suffix_arr = malloc(numsSize * sizeof(int)); 
+	int product = nums[numsSize - 1]; 
+	suffix_arr[numsSize - 1] = 1; 
+	for (int i = numsSize - 2; i >= 0; i--){
+		suffix_arr[i] = product; 
+		product *= nums[i]; 
+	}
+
+	*returnSize = numsSize; 
+	return suffix_arr; 
 }
 
 int* productExceptSelf(int* nums, int numsSize, int* returnSize) {
-    int product = arr_product(nums, numsSize); 
-    int* res = malloc(numsSize * sizeof(int)); 
+	int* prefix_array = prefix_arr(nums, numsSize, returnSize); 
+	int* suffix_array = suffix_arr(nums, numsSize, returnSize); 
+	int* res = malloc(numsSize * sizeof(int)); 
 
-    for (int i = 0; i < numsSize; i++){
-        int quotient_res = quotient(product, nums[i]);
-        res[i] = quotient_res; 
-    }
+	for (int i = 0; i < numsSize; i++){
+		res[i] = prefix_array[i] * suffix_array[i]; 
+	}
 
-    *returnSize = 4; 
-    return res; 
+	*returnSize = numsSize; 
+	return res; 
 }
 
 int main(){
