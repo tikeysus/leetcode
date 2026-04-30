@@ -32,23 +32,43 @@ Review:
 - Revisit:
 */
 
+#include <stdlib.h>
+#include <stdio.h>
+
+int* matrix_to_arr(int** mat, int matSize, int* matColSize){
+	int arr_size = matSize * matColSize[0]; 
+	int* single_d_arr = malloc(arr_size * sizeof(int)); 
+	int count = 0; 
+	for (int i = 0; i < matSize; i++){
+		for (int j = 0; j < matColSize[0]; j++){
+			single_d_arr[j + count] = mat[i][j]; 
+		}
+		count += matColSize[0]; 
+	}
+
+	return single_d_arr; 
+}
+
 int** matrixReshape(int** mat, int matSize, int* matColSize, int r, int c, int* returnSize, int** returnColumnSizes) {
 	if (r * c != (matSize * matColSize[0])){
-		return mat; 
-	}
-	else if (r = matSize){
+		*returnSize = matSize;
+		*returnColumnSizes = matColSize;
 		return mat; 
 	}
 
+	int* one_d = matrix_to_arr(mat, matSize, matColSize); 
     int** res = malloc(r * sizeof(int *)); 
 	*returnSize = r; 
-	returnColumnSizes = malloc(r * sizeof(int)); 
+	*returnColumnSizes = malloc(r * sizeof(int)); 
+
+	int count = 0; 
 	for (int i = 0; i < r; i++){
 		res[i] = malloc(c * sizeof(int)); 
 		(*returnColumnSizes)[i] = c; 
 		for (int j = 0; j < c; j++){
-						
+			res[i][j] = one_d[j + count]; 
 		}
+		count += c; 
 	}
 
 
@@ -56,8 +76,8 @@ int** matrixReshape(int** mat, int matSize, int* matColSize, int r, int c, int* 
 }
 
 int main(){
-    int matrix[2][2] = {{1,2}, {3,4}}; 
-    int matrixColSize[] = {2, 2}; 
+    int matrix[2][3] = {{1,2,3}, {4,5,6}}; 
+    int matColSize[] = {3, 3}; 
     int* rows[2]; 
     for (int i = 0; i < 2; i++){
         rows[i] = matrix[i]; 
@@ -66,7 +86,8 @@ int main(){
     int returnSize; 
     int* returnColumnSizes; 
 	int matSize = 2; 
-    int** res = matrixReshape(rows, matSize, matrixColSize, 1, 4, &returnSize, &returnColumnSizes); 
+    int** res = matrixReshape(rows, matSize, matColSize, 3, 2, &returnSize, &returnColumnSizes); 
+
 
     printf("["); 
     for (int i = 0; i < returnSize; i++){
