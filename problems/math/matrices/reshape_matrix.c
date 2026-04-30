@@ -26,6 +26,7 @@ Space:
 Mistakes / difficulties:
 
 Key lesson:
+Really helpful to consider how 2D arrays are modelled using 1D arrays.
 
 Review:
 - Solved on:
