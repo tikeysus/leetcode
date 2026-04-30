@@ -36,6 +36,9 @@ int** matrixReshape(int** mat, int matSize, int* matColSize, int r, int c, int* 
 	if (r * c != (matSize * matColSize[0])){
 		return mat; 
 	}
+	else if (r = matSize){
+		return mat; 
+	}
 
     int** res = malloc(r * sizeof(int *)); 
 	*returnSize = r; 
@@ -44,7 +47,7 @@ int** matrixReshape(int** mat, int matSize, int* matColSize, int r, int c, int* 
 		res[i] = malloc(c * sizeof(int)); 
 		(*returnColumnSizes)[i] = c; 
 		for (int j = 0; j < c; j++){
-			
+						
 		}
 	}
 
