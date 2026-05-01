@@ -42,9 +42,9 @@ int hammingWeight(int n) {
 	return count; 
 }
 
-int main(){
-	int input = 2147483645;
-	int res = hammingWeight(input); 
-	printf("%d\n", res); 
-	return 0;
-}
+// int main(){
+// 	int input = 2147483645;
+// 	int res = hammingWeight(input); 
+// 	printf("%d\n", res); 
+// 	return 0;
+// }
