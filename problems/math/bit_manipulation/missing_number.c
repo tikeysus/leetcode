@@ -64,12 +64,12 @@ int missingNumber_XOR(int* nums, int numsSize){
 	}
 
 	return range_sum ^ nums_sum; 
-}
+} 
 
 int main(){
 	int nums[] = {3,0,1}; 
 	int numsSize = 3; 
-	int res = missingNumber_XOR(nums, numsSize); 
+	int res = missingNumber(nums, numsSize); 
 	printf("%d\n", res); 
 
 	return 0; 
