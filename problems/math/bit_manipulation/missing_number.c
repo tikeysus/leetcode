@@ -41,14 +41,15 @@ int missingNumber(int* nums, int numsSize) {
 		indexer[nums[i]] = 1; 
 	}
 
-	for (int i = 0; i < (numsSize + 1); i++){
+	int i;
+	for (i = 0; i < (numsSize + 1); i++){
 		if (indexer[i] == 0){
-			return i; 
+			break; 
 		}
 	}
 
 	free(indexer); 
-	return -1; 
+	return i; 
 }
 
 int missingNumber_XOR(int* nums, int numsSize){
