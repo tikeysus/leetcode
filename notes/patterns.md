@@ -6,4 +6,5 @@
 
 ## Bit Manipulation 
 
-- There is a pattern in the fact that a^a=0. 
+- There is a pattern in the fact that a^a=0. 	
+- ORs and ANDs can also be useful in assignments. 
