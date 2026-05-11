@@ -31,16 +31,14 @@ Review:
 */
 
 #include <stdio.h>
-#include <math.h>
 
 int reverseBits(int n){
 	int acc = 0; 
-	int power = 31; 
-	while (n != 0){
+	for (int i = 0; i < 32; i++){
+		acc <<= 1; 
 		if ((n & 1) == 1){
-			acc += (int) pow(2, power); 
+			acc |= 1; 
 		}
-		power--; 
 		n >>= 1; 
 	}
 
