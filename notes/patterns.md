@@ -8,3 +8,4 @@
 
 - There is a pattern in the fact that a^a=0. 	
 - ORs and ANDs can also be useful in assignments. 
+- We can avoid using the pow operation unless we have to. For example, instead of saying 2**n, we can use (1 << n). 
