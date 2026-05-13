@@ -9,3 +9,4 @@
 - There is a pattern in the fact that a^a=0. 	
 - ORs and ANDs can also be useful in assignments. 
 - We can avoid using the pow operation unless we have to. For example, instead of saying 2**n, we can use (1 << n). 
+- ANDing numbers in a certain range means considering the LEFTMOST bits of the first and last numbers. We look at the amount of on bits that are shared starting from the MSB.
