@@ -7,6 +7,9 @@ Pattern:
 
 Description:
 Given two integers left and right that represent the range [left, right], return the bitwise AND of all numbers in this range, inclusive.
+The difficulty is with exceeding the time limit, an optimization is needed. 
+What if we adopt a strategy that solves this problem bit by bit?
+A key hint is that we only care about the common prefix that remains (after conducting the AND operation) from the left. 
 
 Constraints:
 
@@ -30,27 +33,18 @@ Review:
 #include <stdio.h>
 
 int rangeBitwiseAnd(int left, int right) {
-	if (left == 0 || right == 0){
-		return 0; 
+	int shift_count = 0; 
+	while (left != right){
+		left >>= 1;
+		right >>= 1; 
+		shift_count++; 
 	}
-	else if (left == right){
-		return right; 
-	}
-
-	int running_and = left; 
-	long long int i; 
-	for (i = left; i <= right; i++){
-		if (running_and == 0){
-			return 0; 
-		}
-		running_and &= i; 
-	}
-	return running_and; 
-
+	return left << shift_count; 
+	
 }
 
 int main(){
-	int res = rangeBitwiseAnd(1073741832,2147483647); 
+	int res = rangeBitwiseAnd(1123123123,2147483647); 
 	printf("%d\n", res); 
 	return 0; 
 }
