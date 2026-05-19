@@ -1,40 +1,14 @@
 #!/usr/bin/env bash
-set -euo pipefail
 
-usage() {
-  echo "Usage:"
-  echo "  ./scripts/new problems/<topic>/<slug>.<ext>"
-  echo "  ./scripts/new <topic> <slug> [ext]"
-  echo
-  echo "Examples:"
-  echo "  ./scripts/new arrays_hashing contains_duplicate c"
-  echo "  ./scripts/new problems/trees/maximum_depth_binary_tree.c"
-}
+file="$1"
 
-if [ "$#" -eq 0 ]; then
-  usage
-  exit 1
-fi
-
-if [ "$#" -eq 1 ]; then
-  file="$1"
-elif [ "$#" -eq 2 ] || [ "$#" -eq 3 ]; then
-  topic="$1"
-  slug="$2"
-  ext="${3:-c}"
-  file="problems/${topic}/${slug}.${ext}"
-else
-  usage
+if [ -z "$file" ]; then
+  echo "Usage: ./scripts/new path/to/file.rs"
   exit 1
 fi
 
 ext="${file##*.}"
 name="$(basename "$file" ".$ext" | tr '_' ' ')"
-
-if [[ "$file" != problems/* ]]; then
-  echo "New problem files should live under problems/<topic>/<slug>.<ext>"
-  exit 1
-fi
 
 mkdir -p "$(dirname "$file")"
 
