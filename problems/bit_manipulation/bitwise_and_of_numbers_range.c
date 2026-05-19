@@ -40,11 +40,10 @@ int rangeBitwiseAnd(int left, int right) {
 		shift_count++; 
 	}
 	return left << shift_count; 
-	
 }
 
 int main(){
-	int res = rangeBitwiseAnd(1123123123,2147483647); 
+	int res = rangeBitwiseAnd(8, 15);
 	printf("%d\n", res); 
 	return 0; 
 }

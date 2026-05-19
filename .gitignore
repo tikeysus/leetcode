@@ -1,4 +1,5 @@
 build/
 *.dSYM/
 *.h
+!problems/**/*.h
 *.out
