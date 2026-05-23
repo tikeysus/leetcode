@@ -34,69 +34,39 @@ Review:
 
 #include <stdio.h>
 
-// int maxVowels(char* s, int k) {
-//  int max_window_size = 0; 
-// 	int curr_window_size = 0; 
-// 	int count = 0; 
-// 	while (*s != '\0'){
-// 		if (*s=='a' || *s=='e' || *s=='i' || *s=='o' || *s=='u'){
-// 			curr_window_size++; 
-// 		}
-// 		else if ((*s!='a' && *s!='e' && *s!='i' && *s!='o' && *s!='u') || (count != 0 && (count % k == 0))){
-// 			curr_window_size = 0; 
-// 		}
-// 		if (curr_window_size > max_window_size){
-// 			max_window_size = curr_window_size;
-// 		}
-// 		count++; 
-// 		s++; 
-
-// 	}
-// 	return max_window_size; 
-// }
-
-int str_len(char* s_copy){
-	int count = 0; 
-	while (*s_copy != '\0'){
-		count++; 
-		s_copy++;
-	}
-	return count; 
+int is_vowel(char c){
+	return c=='a' || c=='e' || c=='i' || c=='o' || c=='u'; 
 }
 
 int maxVowels(char* s, int k) {
-	//char* s_copy = s;
 	int left = 0; 
-	int right = k-1; 
-	//int s_len = str_len(s_copy) - 1; 
-	int max_window_size = 0; 
-	int curr_window_size = 0; 
-	while (s[right] != '\0'){
-		if ((*s=='a' || *s=='e' || *s=='i' || *s=='o' || *s=='u') && (right - left < k- 1)){
-			right++;
-			curr_window_size++; 
+	int max_count = 0; 
+	int curr_count = 0; 
+
+	for (int right = 0; s[right] != '\0'; right++){
+		if (is_vowel(s[right])){
+			curr_count++; 
 		}
-		if ((right - left) == k - 1){
-			curr_window_size = 0; 
-			left++;
-			right++; 
+
+		if (right - left + 1 > k){
+			if (is_vowel(s[left])){
+				curr_count--; 
+			}
+			left++; 
 		}
-		// else if ((*s!='a' && *s!='e' && *s!='i' && *s!='o' && *s!='u') && ((right - left) < k)){
-		// 	curr_window_size = 0; 
-		// 	left++; 
-		// }
-		if ((curr_window_size > max_window_size)){
-			max_window_size = curr_window_size;
+
+		if (curr_count > max_count){
+			max_count = curr_count; 
 		}
-		s++; 
 	}
 	
-	return max_window_size; 
+
+	return max_count; 
 }
 
 int main(){
-	char s[13] = "weallloveyou";
-	int k = 7; 
+	char s[10] = "abciiidef";
+	int k = 3; 
 	int res = maxVowels(s, k); 
 	printf("%d\n", res); 
 
