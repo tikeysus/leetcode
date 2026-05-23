@@ -35,7 +35,7 @@ Review:
 #include <stdio.h>
 
 int is_vowel(char c){
-	return c=='a' || c=='e' || c=='i' || c=='o' || c=='u'; 
+	return (c=='a' || c=='e' || c=='i' || c=='o' || c=='u'); 
 }
 
 int maxVowels(char* s, int k) {
@@ -54,12 +54,11 @@ int maxVowels(char* s, int k) {
 			}
 			left++; 
 		}
-
+		
 		if (curr_count > max_count){
 			max_count = curr_count; 
 		}
 	}
-	
 
 	return max_count; 
 }
