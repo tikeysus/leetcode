@@ -21,6 +21,7 @@ Time:
 Space:
 
 Mistakes / difficulties:
+My main mistake was not considering the fact that a possible permutation of s1 in s2 has to be of length s1.len()
 
 Key lesson:
 
@@ -32,49 +33,47 @@ Review:
 #include <stdio.h>
 #include <stdbool.h>
 
-// int* ascii_arr_builder(char* s){
-// 	int ascii_arr[28] = {0}; //we know the size of the array here, so iteration through it will be safer later on. 
-// 	for (int i = 0; s[i] != '\0'; i++){
-// 		ascii_arr[s[i] - 'a']++; 
-// 	}
-// 	return ascii_arr; 
-// }
+int array_compare(int* a, int* b) {
+    for (int i = 0; i < 26; i++) {
+        if (a[i] != b[i]) return 0;
+    }
+    return 1;
+}
 
-bool array_compare(int* s1_ascii_arr, int* s2_ascii_arr){
-	for (int i = 0; i < 28; i++){
-		if (s1_ascii_arr[i] != s2_ascii_arr[i]){
-			return false; 
-		}
-	}
-	return true; 
+int array_length(char *s) {
+    int count = 0;
+    for (int i = 0; s[i] != '\0'; i++) {
+        count++;
+    }
+    return count;
 }
 
 bool checkInclusion(char* s1, char* s2) {
-	int s1_ascii_arr[28] = {0};
-	for (int i = 0; s1[i] != '\0'; i++){
-		s1_ascii_arr[s1[i] - 'a']++; 
-	}
-	int s2_ascii_arr[28] = {0}; 
-	
-	for (int right = 0; s2[right] != '\0'; right++){
-		if (s1_ascii_arr[s2[right] - 'a'] == 0){
-			continue; 
-		}
-		else{
-			while (s1_ascii_arr[s2[right] - 'a'] != 0){
-				s2_ascii_arr[s2[right] - 'a']++; 
-				right++; 
-			}
-		}
+    int s1_ascii_arr[26] = {0};
+    int s2_ascii_arr[26] = {0};
 
-		if (array_compare(s1_ascii_arr, s2_ascii_arr) == 1){
-			return true; 
-		}
-		for (int i = 0; i < 28; i++){
-			s2_ascii_arr[i] = 0; 
-		}
-	}
-	return false; 
+    int s1_len = array_length(s1);
+    int s2_len = array_length(s2);
+
+    if (s1_len > s2_len) return false;
+
+    for (int i = 0; i < s1_len; i++) {
+        s1_ascii_arr[s1[i] - 'a']++;
+        s2_ascii_arr[s2[i] - 'a']++;
+    }
+
+    if (array_compare(s1_ascii_arr, s2_ascii_arr)) return true;
+
+    for (int right = s1_len; s2[right] != '\0'; right++) {
+        s2_ascii_arr[s2[right] - 'a']++;
+        s2_ascii_arr[s2[right - s1_len] - 'a']--;
+
+        if (array_compare(s1_ascii_arr, s2_ascii_arr)) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 int main(){
