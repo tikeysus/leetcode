@@ -3,3 +3,4 @@ build/
 *.h
 !problems/**/*.h
 *.out
+*.DS_Store
