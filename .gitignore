@@ -4,3 +4,4 @@ build/
 !problems/**/*.h
 *.out
 *.DS_Store
+*.vscode
