@@ -42,86 +42,60 @@ Review:
 #include <stdlib.h>
 
 typedef struct {
-    int stack_top; 
-	size_t capacity; 
-	int min_element; 
-	int* stack;
+    int stack_top;      // number of elements
+    size_t capacity;
+    int* stack;
+    int* min_stack;
 } MinStack;
 
-
 MinStack* minStackCreate() {
-	MinStack minstack; 
-	minstack.stack_top = -1; //empty 
-	minstack.capacity = 100; 
-	minstack.min_element = -1; //can also do this because we are guaranteed that minStack will only be called on a non-empty array
-	int* stack = malloc(minstack.capacity * sizeof(int)); 
-	minstack.stack = stack; 
+    MinStack* obj = malloc(sizeof(MinStack));
+
+    obj->stack_top = 0;
+    obj->capacity = 100;
+    obj->stack = malloc(100 * sizeof(int));
+    obj->min_stack = malloc(100 * sizeof(int));
+
+    return obj;
 }
 
 void minStackPush(MinStack* obj, int val) {
-	size_t capacity = (*obj).capacity; 
-	int stack_top = (*obj).stack_top; 
-	int min_element = (*obj).min_element; 
-	int* stack = (*obj).stack; 
+    if (obj->stack_top >= obj->capacity) {
+        obj->capacity *= 2;
 
-    if (stack_top >= capacity - 1){
-		capacity *= 2; 
-		int* temp = realloc(stack, capacity);
-		if (temp == NULL){
-			return 1; 
-		}
-		stack = temp; 
-	}
-	if (stack_top == -1){
-		stack_top++; 
-		stack[stack_top] = val; 
-		min_element = val; 
-		stack_top++; 
-	}
-	else{
-		if (val < min_element){
-			min_element = val; 
-		}
-		stack[stack_top] = val;
-		stack_top++; 
-	}
+        obj->stack = realloc(obj->stack, obj->capacity * sizeof(int));
+        obj->min_stack = realloc(obj->min_stack, obj->capacity * sizeof(int));
+    }
 
-	(*obj).capacity = capacity; 
-	(*obj).stack_top = stack_top; 
-	(*obj).min_element = min_element; 
-	(*obj).stack = stack; 
+    int i = obj->stack_top;
+    obj->stack[i] = val;
+
+    if (i == 0) {
+        obj->min_stack[i] = val;
+    } else if (val < obj->min_stack[i - 1]) {
+        obj->min_stack[i] = val;
+    } else {
+        obj->min_stack[i] = obj->min_stack[i - 1];
+    }
+    obj->stack_top++;
 }
 
 void minStackPop(MinStack* obj) {
-	size_t capacity = (*obj).capacity; 
-	int stack_top = (*obj).stack_top; 
-	int min_element = (*obj).min_element; 
-	int* stack = (*obj).stack; 
-
-	if (min_element != stack[stack_top - 1]){
-		obj->stack_top--; 
-		return; 
-	}
-
-	MinStack* new_stack = minStackCreate();
-	new_stack->capacity = capacity;
-	new_stack->stack_top = stack_top - 1; 
+    obj->stack_top--;
 }
 
 int minStackTop(MinStack* obj) {
-	int stack_top = (*obj).stack_top; 
-	int* stack = (*obj).stack; 
-
-	return stack[stack_top - 1]; 
+    return obj->stack[obj->stack_top - 1];
 }
 
 int minStackGetMin(MinStack* obj) {
-    int min_element = (*obj).min_element; 
-	return min_element; 
+    return obj->min_stack[obj->stack_top - 1];
 }
 
 void minStackFree(MinStack* obj) {
-    free(obj); 
+    free(obj->stack);
+    free(obj->min_stack);
+    free(obj);
 }
 
 /**
