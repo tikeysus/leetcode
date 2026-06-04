@@ -32,31 +32,25 @@ Review:
 #include <stdlib.h>
 
 int* dailyTemperatures(int* temperatures, int temperaturesSize, int* returnSize) {
-	int* num_days = malloc(temperaturesSize * sizeof(int)); 
-	int left = 0;
-	int right = 0; 
-	int count; 
-	while(right < temperaturesSize){
-		count = right - left; 
-		if (temperatures[right] > temperatures[left]){
-			num_days[left] = count; 
-			left++; 
-			if (count == 1){
-				right++; 
-			}
-		}
-		else{
-			if (right == temperaturesSize - 1){
-				while(left < temperaturesSize){
-					num_days[left] = 0;
-					left++; 
-				}
-			}
-			right++; 
-		}
-	}
+    int* answer = calloc(temperaturesSize, sizeof(int));
+    int* stack = malloc(temperaturesSize * sizeof(int));
+    int top = -1;
 
-	return num_days;
+    for (int i = 0; i < temperaturesSize; i++) {
+        while (top >= 0 && temperatures[i] > temperatures[stack[top]]) {
+            int prev = stack[top];
+            top--;
+
+            answer[prev] = i - prev;
+        }
+
+        top++;
+        stack[top] = i;
+    }
+
+    free(stack);
+    *returnSize = temperaturesSize;
+    return answer;
 }
 
 int main(){
