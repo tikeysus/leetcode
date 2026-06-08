@@ -44,7 +44,7 @@ int* dailyTemperatures(int* temperatures, int temperaturesSize, int* returnSize)
             answer[prev] = i - prev;
         }
 
-        top++;
+        top++; 
         stack[top] = i;
     }
 
