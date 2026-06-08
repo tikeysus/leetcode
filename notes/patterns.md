@@ -2,7 +2,7 @@
 
 - Prefix and Suffix arrays for except self type questions. 
 - Modelling a 2D array as 1D. 
-- In place array manipulation is a must.
+- If we only want to fill in values that fit a certain criteria while assigning all other array indeces the default value (whether that is 0 or -1), we can use functions like calloc or we can fill it in first with the default value and then invoke the algorithm. 
 
 ## Bit Manipulation 
 
