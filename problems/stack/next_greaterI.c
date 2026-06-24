@@ -40,28 +40,26 @@ Review:
 
 int* nextGreaterElement(int* nums1, int nums1Size, int* nums2, int nums2Size, int* returnSize) {
 	int* answer = malloc(nums1Size * sizeof(int)); 
-	for (int i = 0; i < nums1Size; i++){
-		answer[i] = -1; 
-	}
-	
 	int* stack = malloc(nums2Size * sizeof(int)); 
+	int map[10001]; 
+	for (int i = 0; i < 10000; i++){
+		map[i] = -1; 
+	}
+
 	int top = -1; 
-	int j = 0; 
 	for (int i = 0; i < nums2Size; i++){
-		while (top != -1 && nums2[i] > stack[top]){
-			int prev = stack[top]; 
+		int num = nums2[i]; 
+		while (top >= 0 && num > stack[top]){
+			map[stack[top]] = num; 
 			top--; 
-			while (j <= nums1Size - 1){
-				if (nums1[j] == nums2[i]){
-					answer[j] = prev; 
-				}
-				j++; 
-			}
-			j = 0; 
 		}
 
-		top++; 
-		stack[top] = nums2[i]; 
+		top++;
+		stack[top] = num; 
+	}
+
+	for (int i = 0; i < nums1Size; i++){
+		answer[i] = map[nums1[i]]; 
 	}
 	
 	*returnSize = nums1Size; 
