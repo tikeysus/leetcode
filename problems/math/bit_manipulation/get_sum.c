@@ -33,25 +33,38 @@ Review:
 #include <stdio.h>
 
 int getSum(int a, int b) {
-    int sum = 0; 
-	while (a > 0 || b > 0){
-		int a_last = a & 1; 
-		int b_last = b & 1; 
-
-		sum <<= 1; 
-		if ((a_last | b_last) == 1){
-			sum |= 1; 
+    int carry = 0; 
+	int acc = 0; 
+	while ((a | b) == 0){
+		int a_last_bit = a & 1; 
+		int b_last_bit = b & 1; 
+		if (carry == 0){
+			if (a_last_bit == 1 || b_last_bit == 1){
+				acc |= 1; 
+			}
+			else if (a_last_bit == 1 && b_last_bit == 1){
+				carry = 1; 
+			}
 		}
+		else{
+			if (a_last_bit == 0 && b_last_bit == 0){
+				acc |= 1; 
+				carry = 0; 
+			}
+			else if (a_last_bit == 1 && b_last_bit == 1){
+				acc |= 1;
+			}
+		}
+		acc <<= 1; 
 		a >>= 1;
-		b >>= 1;  
+		b >>= 1; 
 	}
-
-	return sum <<= 1; 
+	return acc; 
 }
 
 int main(){
-	int a = 10; 
-	int b = 2; 
+	int a = 8; 
+	int b = 7; 
 	int sum = getSum(a, b); 
 	printf("%d\n", sum); 
 	return 0; 
