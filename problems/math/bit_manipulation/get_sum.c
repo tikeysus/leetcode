@@ -34,37 +34,39 @@ Review:
 
 int getSum(int a, int b) {
     int carry = 0; 
+	int shift_count = 0;
+	
 	int acc = 0; 
-	while ((a | b) == 0){
-		int a_last_bit = a & 1; 
-		int b_last_bit = b & 1; 
+	for (int i = 0; i < 32; i++){
+		int a_last_bit = a & 1;
+		int b_last_bit = b & 1;
 		if (carry == 0){
-			if (a_last_bit == 1 || b_last_bit == 1){
-				acc |= 1; 
+			if (a_last_bit == 1 && b_last_bit == 1){
+				carry = 1;
 			}
-			else if (a_last_bit == 1 && b_last_bit == 1){
-				carry = 1; 
+			else if (a_last_bit == 1 || b_last_bit == 1){
+				acc |= (1LL << shift_count);
 			}
 		}
 		else{
 			if (a_last_bit == 0 && b_last_bit == 0){
-				acc |= 1; 
+				acc |= (1LL << shift_count);
 				carry = 0; 
 			}
 			else if (a_last_bit == 1 && b_last_bit == 1){
-				acc |= 1;
+				acc |= (1LL << shift_count);
 			}
 		}
-		acc <<= 1; 
-		a >>= 1;
+		shift_count++;
+		a >>= 1; 
 		b >>= 1; 
 	}
 	return acc; 
 }
 
 int main(){
-	int a = 8; 
-	int b = 7; 
+	int a = -12; 
+	int b = -8; 
 	int sum = getSum(a, b); 
 	printf("%d\n", sum); 
 	return 0; 
