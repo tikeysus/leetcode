@@ -36,7 +36,24 @@ Review:
 
 int findMaximumXOR(int* nums, int numsSize){
 	int result = 0; 
+	for (int i = 0; i < 32; i++){
+		int one_observed = 0; 
+		int zero_observed = 0; 
+		for (int j = 0; j < numsSize; j++){
+			if ((nums[j] >> i) & 1){
+				one_observed = 1; 
+			}
+			else if (((nums[j] >> i) & 1) == 0){
+				zero_observed = 1; 
+			}
+		}
 
+		if (one_observed && zero_observed){
+			result |= (1LL << i); 
+		}
+	}
+
+	return result; 
 }
 
 int main(){
