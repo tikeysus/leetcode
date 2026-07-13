@@ -29,24 +29,31 @@ Review:
 - Revisit:
 */
 
-#include <stdlib.h>
+#include <stdio.h>
 
 void moveZeroes(int* nums, int numsSize) {
-    int left_edge = 0; 
-	int i = 0; 
-	while (left_edge < numsSize - 1){
-		if (nums[i] == 0){
-			int old = nums[i]; 
-			int new = nums[i + 1]; 
-			nums[i] = new; 
-			nums[i + 1] = old; 
+	int left = 0; 
+	while (left < numsSize - 1){
+		if (nums[left] == 0){
+			int old_index = left; 
+			while (left <= numsSize - 1 && nums[left] == 0){
+				left++; 
+			}
+			if (left == numsSize && nums[left - 1] == 0){ break; }
+			int temp = nums[left]; 
+			nums[old_index] = temp; 
+			nums[left] = 0; 
+			left = old_index + 1; 
+		}
+		else{
+			left++; 
 		}
 	}
 }
 
 int main(){
-	int nums[] = {0,1,0,3,12}; 
-	int numsSize = 5; 
+	int nums[] = {31,2,0,0,2,1,3}; 
+	int numsSize = 7; 
 	moveZeroes(nums, numsSize); 
 	for (int i = 0; i < numsSize; i++){
 		printf("%d,", nums[i]); 
