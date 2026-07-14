@@ -34,19 +34,44 @@ Review:
 
 int removeDuplicates(int* nums, int numsSize) {
 	int k = 1; 
-	int left = 0; 
-	int right = 0; 
-	while 
+	int i = 1; 
+	int curr_num = nums[0]; 
+	int curr_num_index = 0; 
+
+	while (i < numsSize){
+		if (nums[i] > curr_num){
+			k++; 
+			curr_num = nums[i]; 
+			curr_num_index = i; 
+			i++; 
+			continue; 
+		}
+		while (i < numsSize && nums[i] <= curr_num){
+			i++; 
+		}
+		if (i == numsSize && nums[i - 1] <= curr_num){ break; }
+		k++; 
+
+		int temp = nums[i]; 
+		nums[curr_num_index + 1] = temp; 
+		nums[i] = curr_num; 
+
+		curr_num = nums[curr_num_index + 1]; 
+		curr_num_index++; 
+		i = curr_num_index; 
+	}
+
+	return k; 
 }
 
 int main(){
-	int nums[] = {1,1,2,2,3}; 
-	int numsSize = 5; 
-	moveZeroes(nums, numsSize); 
-	for (int i = 0; i < numsSize; i++){
-		printf("%d,", nums[i]); 
-	}
-	printf("\n"); 
+	int nums[] = {1,2}; 
+	int numsSize = 2; 
+	int res = removeDuplicates(nums, numsSize); 
+	// for (int i = 0; i < numsSize; i++){
+	// 	printf("%d,", nums[i]); 
+	// }
+	printf("%d\n", res); 
 
 	return 0; 
 }
