@@ -35,8 +35,8 @@ struct ListNode {
 };
 
 int node_len(struct ListNode* head){
-	int sz = 0; 
-	for (int i = 0; (head->next) != NULL; i++){
+	int sz = 1; 
+	while(head->next != NULL){
 		head = head->next; 
 		sz++; 
 	}
@@ -51,14 +51,20 @@ struct ListNode* removeNthFromEnd(struct ListNode* head, int n) {
         free(head);
         return temp;
     }
-    
-    struct ListNode* current = head;
-    for (int i = 0; i < (sz - n - 1); i++) {
-        current = current->next;
+ 
+    struct ListNode *curr = head; 
+    for (int i = 0; i < sz - n - 1; i++){
+        curr = curr->next; 
     }
-    
-    current->next = current->next->next;
-    free(current->next);  
-    
-    return head;
+
+    if (n == 1){
+        curr->next = NULL; 
+        return head; 
+    }
+    else{
+        struct ListNode *temp = curr->next; 
+        curr->next = curr->next->next; 
+        free(temp); 
+        return head; 
+    }
 }
