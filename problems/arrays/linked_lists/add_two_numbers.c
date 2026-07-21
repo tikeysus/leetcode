@@ -24,6 +24,7 @@ Time:
 Space:
 
 Mistakes / difficulties:
+Carries.
 
 Key lesson:
 
@@ -39,49 +40,39 @@ struct ListNode {
 	struct ListNode *next;
 };
 
-long long linked_to_int(struct ListNode* l) {
-    unsigned long long acc = 0;
-
-    acc += l->val;
-    l = l->next;
-    unsigned long long i = 1;
-    while (l != NULL) {
-        acc += (l->val) * (10LL * i);
-        l = l->next;
-        i *= 10;
+struct ListNode* addTwoNumbersRecursive(struct ListNode* l1, struct ListNode* l2, int carry) {
+    // Base case: both lists exhausted
+    if (l1 == NULL && l2 == NULL) {
+        if (carry == 0) return NULL;
+        
+        // Create node for final carry
+        struct ListNode* node = (struct ListNode*)malloc(sizeof(struct ListNode));
+        node->val = carry;
+        node->next = NULL;
+        return node;
     }
-    return acc;
+    
+    // Extract values (0 if list is exhausted)
+    int val1 = (l1 != NULL) ? l1->val : 0;
+    int val2 = (l2 != NULL) ? l2->val : 0;
+    
+    // Calculate sum and new carry
+    int digit_sum = val1 + val2 + carry;
+    int digit = digit_sum % 10;
+    int new_carry = digit_sum / 10;
+    
+    // Move to next nodes
+    struct ListNode* next_l1 = (l1 != NULL) ? l1->next : NULL;
+    struct ListNode* next_l2 = (l2 != NULL) ? l2->next : NULL;
+    
+    // Create current node and recursively build rest of list
+    struct ListNode* node = (struct ListNode*)malloc(sizeof(struct ListNode));
+    node->val = digit;
+    node->next = addTwoNumbersRecursive(next_l1, next_l2, new_carry);
+    
+    return node;
 }
-
-struct ListNode* int_to_linked(long long res) {
-	unsigned long long res_copy = res; 
-
-	struct ListNode *sum = (struct ListNode*)(malloc(sizeof(struct ListNode))); 
-	sum->next = NULL; 
-	struct ListNode *answer = sum; 
-
-	unsigned long long i = 1; 
-	while (res_copy != 0){
-		int digit = (res % (10LL * i)) / i; 
-
-		sum->val = digit;
-		struct ListNode *new_node = (struct ListNode*)(malloc(sizeof(struct ListNode))); 
-		new_node->next = NULL; 
-		sum->next = new_node; 
-        if (res_copy/10 == 0) { sum -> next = NULL; }
-        else { sum = sum->next; }
-		
-
-		i *= 10LL; res_copy /= 10LL; 
-	}
-	return answer; 
-}
-
+ 
 struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
-    if (l1->val == 0 && l1->next == NULL){ return l2; }
-    if (l2->val == 0 && l2->next == NULL){ return l1; }
-    unsigned long long l1_int = linked_to_int(l1);
-    unsigned long long l2_int = linked_to_int(l2);
-    unsigned long long res = l2_int + l1_int;
-    return int_to_linked(res);
+    return addTwoNumbersRecursive(l1, l2, 0);
 }
