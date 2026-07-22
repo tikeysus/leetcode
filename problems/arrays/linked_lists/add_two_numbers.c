@@ -40,39 +40,44 @@ struct ListNode {
 	struct ListNode *next;
 };
 
-struct ListNode* addTwoNumbersRecursive(struct ListNode* l1, struct ListNode* l2, int carry) {
-    // Base case: both lists exhausted
-    if (l1 == NULL && l2 == NULL) {
-        if (carry == 0) return NULL;
-        
-        // Create node for final carry
-        struct ListNode* node = (struct ListNode*)malloc(sizeof(struct ListNode));
-        node->val = carry;
-        node->next = NULL;
-        return node;
+void addTwoNumbersRecursive(struct ListNode* l1, struct ListNode* l2, int carry, struct ListNode* acc) {
+    int l1_val = 0;
+    if (l1 != NULL) {
+        l1_val = l1->val;
     }
     
-    // Extract values (0 if list is exhausted)
-    int val1 = (l1 != NULL) ? l1->val : 0;
-    int val2 = (l2 != NULL) ? l2->val : 0;
+    int l2_val = 0;
+    if (l2 != NULL) {
+        l2_val = l2->val;
+    }
     
-    // Calculate sum and new carry
-    int digit_sum = val1 + val2 + carry;
-    int digit = digit_sum % 10;
-    int new_carry = digit_sum / 10;
+    int digit_sum_carry = l1_val + l2_val + carry;
     
-    // Move to next nodes
-    struct ListNode* next_l1 = (l1 != NULL) ? l1->next : NULL;
-    struct ListNode* next_l2 = (l2 != NULL) ? l2->next : NULL;
+    acc->val = digit_sum_carry % 10;
+    int new_carry = digit_sum_carry / 10;
     
-    // Create current node and recursively build rest of list
-    struct ListNode* node = (struct ListNode*)malloc(sizeof(struct ListNode));
-    node->val = digit;
-    node->next = addTwoNumbersRecursive(next_l1, next_l2, new_carry);
+    struct ListNode* next_l1 = NULL;
+    if (l1 != NULL) {
+        next_l1 = l1->next;
+    }
     
-    return node;
+    struct ListNode* next_l2 = NULL;
+    if (l2 != NULL) {
+        next_l2 = l2->next;
+    }
+    
+    if (next_l1 == NULL && next_l2 == NULL && new_carry == 0) {
+        acc->next = NULL;
+        return;
+    }
+    
+    struct ListNode* new_node = (struct ListNode*)malloc(sizeof(struct ListNode));
+    acc->next = new_node;
+    addTwoNumbersRecursive(next_l1, next_l2, new_carry, new_node);
 }
- 
+
 struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
-    return addTwoNumbersRecursive(l1, l2, 0);
+    struct ListNode* head = (struct ListNode*)malloc(sizeof(struct ListNode));
+    addTwoNumbersRecursive(l1, l2, 0, head);
+    return head;
 }
