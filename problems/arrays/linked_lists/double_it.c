@@ -38,7 +38,6 @@ struct ListNode {
 };
 
 int doubleItRecursive(struct ListNode* head, struct ListNode* acc){
-	
 }
 
 struct ListNode* doubleIt(struct ListNode* head){
