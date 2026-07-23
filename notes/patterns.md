@@ -14,3 +14,7 @@
 ## Sliding Window
 
 - We can use while loops inside our for loops to ensure that the ideal conditions are met for the window to keep sliding.
+
+## Matrices 
+
+- Look for patterns like multiplication, row/column reversal, transpose, see what sticks. 
