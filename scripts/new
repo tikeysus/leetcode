@@ -59,3 +59,4 @@ EOT
 esac
 
 echo "Created $file"
+code "$file"
