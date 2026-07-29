@@ -34,27 +34,30 @@ Review:
 
 #include <stdio.h>
 
-int search_recursive(int* nums, int left, int right, int target){
+int search(int* nums, int numsSize, int target) {
+	int left = 0; 
+	int right = numsSize - 1; 
 	int mid; 
+
 	while (left <= right){
-		mid = left + (right-left)/2; 
+		mid = left + (right-left)/2;
 		if (nums[mid] == target) { return mid; }
+		if (nums[mid] >= nums[left]){
+			if (target >= nums[left] && target < nums[mid]){ right = mid - 1; }
+			else{ left = mid + 1; }
+		}
 		else{
-			return search_recursive(nums, left, mid - 1, target) + search_recursive(nums, mid + 1, right, target) + 1; 
+			if (target <= nums[right] && target > nums[mid]) { left = mid + 1; }
+			else{ right = mid - 1; }
 		}
 	}
-	return -1; 		
-}
-
-
-int search(int* nums, int numsSize, int target) {
-	return search_recursive(nums, 0, numsSize - 1, target);
+	return -1;
 }
 
 int main(){
-	int nums[] = {7,0,1,2,4,5,6}; 
+	int nums[] = {4,5,6,7,0,1,2}; 
 	int numsSize = 7; 
-	int target = 12;
+	int target = 0;
 	int res = search(nums, numsSize, target); 
 	printf("%d\n", res); 
 	return 0; 
