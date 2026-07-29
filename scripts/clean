@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+root="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$root"
+
+removed=0
+
+rm_report() {
+  echo "Removing: $1"
+  rm -rf "$1"
+  removed=$((removed + 1))
+}
+
+while IFS= read -r -d '' f; do
+  rm_report "$f"
+done < <(find . -name 'a.out' -print0)
+
+while IFS= read -r -d '' d; do
+  rm_report "$d"
+done < <(find . -type d -name '*.dSYM' -print0)
+
+while IFS= read -r -d '' d; do
+  rm_report "$d"
+done < <(find . -type d -name 'build' -print0)
+
+while IFS= read -r -d '' src; do
+  dir="$(dirname "$src")"
+  name="$(basename "$src")"
+  base="${name%.*}"
+  bin="$dir/$base"
+  if [ -f "$bin" ] && [ -x "$bin" ]; then
+    rm_report "$bin"
+  fi
+done < <(find . \( -name '*.c' -o -name '*.rs' \) -print0)
+
+if [ "$removed" -eq 0 ]; then
+  echo "Nothing to clean."
+else
+  echo "Cleaned $removed item(s)."
+fi
