@@ -18,7 +18,7 @@ if [ -e "$file" ]; then
 fi
 
 case "$ext" in
-  rs|c|py)
+  c)
     cat > "$file" <<EOT
 /*
 Problem: $name
@@ -47,6 +47,98 @@ Review:
 - Solved on:
 - Revisit:
 */
+
+EOT
+    ;;
+  rs)
+    cat > "$file" <<EOT
+// Problem: $name
+// Link:
+// Difficulty:
+// Topic(s):
+// Pattern:
+//
+// Description:
+//
+// Constraints:
+//
+// Initial idea:
+//
+// Final approach:
+//
+// Complexity:
+// Time:
+// Space:
+//
+// Mistakes / difficulties:
+//
+// Key lesson:
+//
+// Review:
+// - Solved on:
+// - Revisit:
+
+EOT
+    ;;
+  py)
+    cat > "$file" <<EOT
+"""
+Problem: $name
+Link:
+Difficulty:
+Topic(s):
+Pattern:
+
+Description:
+
+Constraints:
+
+Initial idea:
+
+Final approach:
+
+Complexity:
+Time:
+Space:
+
+Mistakes / difficulties:
+
+Key lesson:
+
+Review:
+- Solved on:
+- Revisit:
+"""
+
+EOT
+    ;;
+  hs)
+    cat > "$file" <<EOT
+-- Problem: $name
+-- Link:
+-- Difficulty:
+-- Topic(s):
+-- Pattern:
+--
+-- Description:
+--
+-- Constraints:
+--
+-- Initial idea:
+--
+-- Final approach:
+--
+-- Complexity:
+-- Time:
+-- Space:
+--
+-- Mistakes / difficulties:
+--
+-- Key lesson:
+--
+-- Review:
+-- - Solved on:
+-- - Revisit:
 
 EOT
     ;;
