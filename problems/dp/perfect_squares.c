@@ -44,8 +44,9 @@ int numSquares(int n) {
 			curr_root++; 
 			dp_arr[i] = 1; 
 		}
+		else if ((i+1) % (curr_root) == 0){ dp_arr[i] = (i+1)/(curr_root); }
 		else{
-			dp_arr[i] = dp_arr[curr_root - 1] + dp_arr[i - curr_root];
+			dp_arr[i] = dp_arr[curr_root*curr_root - 1] + dp_arr[i - (curr_root*curr_root - 1) - 1];
 		}
 	}
 	int res = dp_arr[n-1]; 
@@ -54,7 +55,7 @@ int numSquares(int n) {
 }
 
 int main(){
-	int n = 4; 
+	int n = 12; 
 	int res = numSquares(n); 
 	printf("%d\n", res); 
 	
