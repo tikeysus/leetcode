@@ -29,26 +29,51 @@ Review:
 - Revisit:
 */
 
-int minPathSum(int** grid, int gridSize, int* gridColSize) {
+#include<stdio.h>
 
-}
-
-int minPathSum_recursive(int** grid, int gridSize, int* gridColSize, int acc) {
+int minPathSum_recursive(int** grid, int gridSize, int gridColSize, int acc) {
 	if (gridSize == 1){
-		for (int i = gridColSize[0] - 1; i >= 0; i--){
+		for (int i = gridColSize - 1; i >= 0; i--){
 			acc += grid[0][i]; 
 		}
 		return acc; 
 	}
-	else if (gridColSize[0] == 1){
-		for (int i = gridColSize[0] - 1; i >= 0; i--){
+	else if (gridColSize == 1){
+		for (int i = gridSize - 1; i >= 0; i--){
 			acc += grid[i][0]; 
 		}
 		return acc; 
 	}
-	int option_2; 
-	else{
-		option_2 = 
+	int left = minPathSum_recursive(grid, gridSize, gridColSize - 1, acc + grid[gridSize - 1][gridColSize - 1]); 
+	int up = minPathSum_recursive(grid, gridSize - 1, gridColSize, acc + grid[gridSize - 1][gridColSize - 1]); 
+	if (left < up){
+		return left; 
 	}
-	int option_1 = minPathSum_recursive(grid, gridSize - 1, gridColSize, acc + grid[gridColSize[0]]); 
+	else{ return up; }
+}
+
+int minPathSum(int** grid, int gridSize, int* gridColSize) {
+	if (gridSize == 1){ 
+		int acc = 0; 
+		for (int i = 0; i < gridColSize[0]; i++){ acc += grid[0][i]; }
+		return acc; 
+	}
+	return minPathSum_recursive(grid, gridSize, gridColSize[0], 0);
+}
+
+
+int main(){
+	int grid[2][3] = {
+		{1,2,3},
+		{4,5,6}, 
+	}; 
+	int gridSize = 2; 
+	int gridColSize[] = {3,3}; 
+	int* row_pointers[2]; 
+	row_pointers[0] = grid[0]; 
+	row_pointers[1] = grid[1]; 
+	int res = minPathSum(row_pointers, gridSize, gridColSize); 
+	printf("%d\n", res); 
+
+	return 0; 
 }
