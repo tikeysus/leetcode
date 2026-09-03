@@ -61,6 +61,34 @@ int minPathSum(int** grid, int gridSize, int* gridColSize) {
 	return minPathSum_recursive(grid, gridSize, gridColSize[0], 0);
 }
 
+int minPathSum(int** grid, int gridSize, int* gridColSize) {
+    if (gridSize == 1){
+        int sum = 0; 
+        for (int m = 0; m < 1; m++){
+            for (int n = 0; n < gridColSize[0]; n++){
+                sum += grid[m][n]; 
+            }
+        }
+        return sum; 
+    }
+    
+	for (int i = 1; i < gridColSize[0]; i++){
+		grid[0][i] += grid[0][i - 1]; 
+	}
+
+	for (int j = 1; j < gridSize; j++){
+		grid[j][0] += grid[j- 1][0]; 
+	}
+
+	int m = 1;
+	int n = 1; 
+	for (m = 1; m < gridSize; m++){
+		for (n = 1; n < gridColSize[0]; n++){
+			grid[m][n] += grid[m-1][n] < grid[m][n-1] ? grid[m-1][n]: grid[m][n-1];
+		}
+	}
+	return grid[m-1][n-1]; 
+}
 
 int main(){
 	int grid[2][3] = {
@@ -72,7 +100,7 @@ int main(){
 	int* row_pointers[2]; 
 	row_pointers[0] = grid[0]; 
 	row_pointers[1] = grid[1]; 
-	int res = minPathSum(row_pointers, gridSize, gridColSize); 
+	int res = minPathSum_DP(row_pointers, gridSize, gridColSize); 
 	printf("%d\n", res); 
 
 	return 0; 
