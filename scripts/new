@@ -50,6 +50,36 @@ Review:
 
 EOT
     ;;
+  cpp|cc|cxx|hpp|hh)
+    cat > "$file" <<EOT
+// Problem: $name
+// Link:
+// Difficulty:
+// Topic(s):
+// Pattern:
+//
+// Description:
+//
+// Constraints:
+//
+// Initial idea:
+//
+// Final approach:
+//
+// Complexity:
+// Time:
+// Space:
+//
+// Mistakes / difficulties:
+//
+// Key lesson:
+//
+// Review:
+// - Solved on:
+// - Revisit:
+
+EOT
+    ;;
   rs)
     cat > "$file" <<EOT
 // Problem: $name
