@@ -1,0 +1,15 @@
+#include <stdlib.h>
+#include <string.h>
+#include <stdint.h>
+#include <stdlib.h>
+
+#include "table.h"
+
+uint32_t hash_string(const char* key, size_t length) {
+	uint32_t hash = 2166136261u;
+	for (size_t i = 0; i < length; i++) {
+		hash ^= (uint8_t)key[i];
+		hash *= 16777619;
+	}
+	return hash;
+}
